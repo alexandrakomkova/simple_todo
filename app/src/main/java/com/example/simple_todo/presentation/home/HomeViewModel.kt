@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.simple_todo.domain.model.TodoEntity
-import com.example.simple_todo.domain.repository.TodoRepo
+import com.example.simple_todo.domain.use_cases.TodoUseCases
 import com.example.simple_todo.domain.use_cases.ValidateTodoDescription
 import com.example.simple_todo.domain.use_cases.ValidateTodoTitle
 import com.example.simple_todo.presentation.add_todo_form.AddTodoFormEvent
@@ -21,8 +21,9 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class HomeViewModel: ViewModel(), KoinComponent {
-    private val repo: TodoRepo by inject()
+class HomeViewModel(
+    private val todoUseCases: TodoUseCases
+): ViewModel(), KoinComponent {
 
     private val _todos: MutableStateFlow<List<TodoEntity>> = MutableStateFlow(emptyList())
     val todos = _todos.asStateFlow()
@@ -75,29 +76,30 @@ class HomeViewModel: ViewModel(), KoinComponent {
         viewModelScope.launch { validationEventChannel.send(ValidationEvent.Success) }
     }
 
-    private fun getTodos() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repo.getTodos().collect { data ->
-                _todos.update { data }
-            }
-        }
-    }
-
     fun addTodos(todo: TodoEntity) {
         viewModelScope.launch(Dispatchers.IO) {
-            repo.addTodo(todo)
+            todoUseCases.addTodoUseCase(todo)
         }
     }
 
     fun updateTodos(todo: TodoEntity) {
         viewModelScope.launch(Dispatchers.IO) {
-            repo.updateTodo(todo)
+            todoUseCases.updateTodoUseCase(todo)
         }
     }
 
     fun deleteTodos(todo: TodoEntity) {
         viewModelScope.launch(Dispatchers.IO) {
-            repo.deleteTodo(todo)
+            todoUseCases.deleteTodoUseCase(todo)
+        }
+    }
+
+    private fun getTodos() {
+        viewModelScope.launch(Dispatchers.IO) {
+            todoUseCases.getTodosUseCase().collect {todos ->
+                _todos.update { todos }
+
+            }
         }
     }
 

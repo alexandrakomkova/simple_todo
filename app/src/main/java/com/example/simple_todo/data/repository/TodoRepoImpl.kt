@@ -10,7 +10,7 @@ class TodoRepoImpl(
 ): TodoRepo {
     private val dao = database.todoDao()
 
-    override suspend fun getTodos(): Flow<List<TodoEntity>> = dao.getTodos()
+    override fun getTodos(): Flow<List<TodoEntity>> = dao.getTodos()
     override suspend fun addTodo(todoEntity: TodoEntity) = dao.addTodo(todoEntity)
     override suspend fun updateTodo(todoEntity: TodoEntity) = dao.updateTodo(todoEntity)
     override suspend fun deleteTodo(todoEntity: TodoEntity) = dao.deleteTodo(todoEntity)

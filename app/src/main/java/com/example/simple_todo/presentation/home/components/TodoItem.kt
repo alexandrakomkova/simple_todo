@@ -1,4 +1,4 @@
-package com.example.simple_todo.presentation.components
+package com.example.simple_todo.presentation.home.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi

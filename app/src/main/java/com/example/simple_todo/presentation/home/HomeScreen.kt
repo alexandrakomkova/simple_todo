@@ -43,8 +43,8 @@ import androidx.compose.ui.window.Dialog
 import com.example.simple_todo.domain.model.TodoEntity
 import com.example.simple_todo.presentation.add_todo_form.AddTodoFormEvent
 import com.example.simple_todo.presentation.add_todo_form.AddTodoFormState
-import com.example.simple_todo.presentation.components.CustomTextField
-import com.example.simple_todo.presentation.components.TodoItem
+import com.example.simple_todo.presentation.add_todo_form.components.CustomTextField
+import com.example.simple_todo.presentation.home.components.TodoItem
 import com.example.simple_todo.ui.theme.Background
 import com.example.simple_todo.ui.theme.DarkBackground
 import com.example.simple_todo.ui.theme.White80

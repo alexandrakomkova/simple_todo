@@ -1,4 +1,4 @@
-package com.example.simple_todo.presentation.components
+package com.example.simple_todo.presentation.add_todo_form.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
