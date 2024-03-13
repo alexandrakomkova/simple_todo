@@ -1,6 +1,6 @@
 # simple_todo app
 
-Android mobile app for storing todos.
+Android app for storing todos.
 
 ## Description
 * add todo
