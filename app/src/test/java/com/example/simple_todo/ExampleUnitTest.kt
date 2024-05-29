@@ -1,6 +1,7 @@
 package com.example.simple_todo
 
-import org.junit.Test
+
+import org.junit.jupiter.api.Test
 
 import org.junit.Assert.*
 
