@@ -6,6 +6,7 @@ Android app for storing todos.
 * add todo
 * view list of todos
 * check/uncheck todos
+* delete todos
 
 
 ## Screenshots
