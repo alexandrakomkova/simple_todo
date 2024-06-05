@@ -2,28 +2,34 @@ package com.example.simple_todo.domain.use_cases
 
 import com.example.simple_todo.data.repository.FakeTodoRepo
 import com.example.simple_todo.domain.model.TodoEntity
-import com.google.common.truth.Truth.assertThat
+import com.google.common.truth.Truth
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-@OptIn(ExperimentalCoroutinesApi::class)
-class GetTodosUseCaseTest {
 
+@OptIn(ExperimentalCoroutinesApi::class)
+class AddTodoUseCaseTest {
 		private lateinit var getTodosUseCase: GetTodosUseCase
+		private lateinit var addTodoUseCase: AddTodoUseCase
 		private lateinit var fakeTodoRepo: FakeTodoRepo
 
 		@BeforeEach
 		fun setUp() {
+
 				fakeTodoRepo = FakeTodoRepo()
 				getTodosUseCase = GetTodosUseCase(fakeTodoRepo)
+			  addTodoUseCase = AddTodoUseCase(fakeTodoRepo)
+		}
 
-				val todosToInsert = mutableListOf<TodoEntity>()
+		@Test
+		fun addTodo_correct() = runBlocking<Unit> {
 				('a'..'z').forEachIndexed { index, c ->
-						todosToInsert.add(
+						addTodoUseCase.invoke(
 								TodoEntity(
 										title = c.toString(),
 										description = c.toString(),
@@ -31,25 +37,25 @@ class GetTodosUseCaseTest {
 										isDone = index % 2 == 0
 								)
 						)
+
 				}
 
-				runBlocking {
-						todosToInsert.forEach { fakeTodoRepo.addTodo(it) }
-				}
-
+				val todos = getTodosUseCase.invoke().flatMapConcat { it.asFlow() }.toList()
+				Truth.assertThat(todos.isNotEmpty())
 		}
 
 		@Test
-		fun checkTodosIsNotEmpty() = runBlocking<Unit> {
-				 val todos = getTodosUseCase.invoke().flatMapConcat { it.asFlow() }.toList()
-				 assertThat(todos.isNotEmpty())
+		fun addEmptyTitleTodo_validationCheck() = runBlocking<Unit> {
+				val todo = TodoEntity(
+						title = "",
+						description = "123",
+						timestamp = 1.toLong(),
+						isDone = false
+				)
 
-		}
+				val titleResult = ValidateTodoTitle().execute(todo.title)
 
-		@Test
-		fun checkFirstTodoIsEqualToFirstAdded() = runBlocking<Unit> {
-				val todo = getTodosUseCase.invoke().toList().first()
-				assertThat(todo[0].title == "a")
+				Assertions.assertFalse(titleResult.successful)
 		}
 
 

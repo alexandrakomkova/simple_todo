@@ -2,22 +2,13 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="ExampleInstrumentedTest">
+      <entry key="HomeScreenTest">
         <State />
       </entry>
       <entry key="app">
         <State />
       </entry>
-      <entry key="fillAddForm_correct()">
-        <State />
-      </entry>
-      <entry key="fillAddForm_error()">
-        <State />
-      </entry>
-      <entry key="tapAddButton_addFormAppeared()">
-        <State />
-      </entry>
-      <entry key="useAppContext()">
+      <entry key="clickToggleOrderSection_isVisible()">
         <State />
       </entry>
     </value>

@@ -42,7 +42,7 @@ class DeleteTodoUseCaseTest {
 
 
 		@Test
-		fun `Delete all todos, correct output`() = runBlocking<Unit> {
+		fun deleteAllTodos_checkDbIsEmpty() = runBlocking<Unit> {
 				val todos = getTodosUseCase.invoke().flatMapConcat { it.asFlow() }.toList()
 
 				todos.map { deleteTodoUseCase(it) }
